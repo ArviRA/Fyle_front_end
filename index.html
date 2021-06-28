@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.6/es6-shim.min.js" integrity="sha512-Dg4/NsM35WYe4Vpj/ZzxsN7K4ifsi6ecw9+VB5rmCntqoQjEu4dQxL6/qQVebHalidCqWiVkWVK59QtJCCjBDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h2>BANK Table</h2>
+        <label for="city">City:</label>
+        <select id="city" onchange="filterbycity()">
+            <option value="None" selected>None</option>
+            <option value="bangalore" >bangalore</option>
+            <option value="chennai">chennai</option>
+            <option value="mumbai">mumbai</option>
+            <option value="delhi">delhi</option>
+            <option value="thane">thane</option>
+        </select>
+        <input type="text" style="" value="Type here" id='search' onkeyUp="filterData()" onchange="getSearchData()" size="40">
+        
+        <table id="bankTable">
+            <div id="table">
+            </div>
+        </table>
+
+        <label for="limt">No Of Items:</label>
+        <select id="limit" onchange="changeLimt()">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <div style="float:right;">
+            <input type="button" id="prev" name="prev" value="Prev" onclick="prevFunc()">
+            <label for="lname">JumpTo:</label>
+            <input type="text" id="jumpTo" name="jumpTo" value='1' size='1px' onchange="changeOffset()">
+            /
+            <input type="text" style="outline: none;border:0" id='totalCount' readonly size="1">
+            <input type="button" id="next" name="next" value="Next" onclick="nextFunc()">
+            <br><br>
+        </div>
+        
+
+    </body>
+    <script>
+        var offset = 0;
+        var limit = 10;
+        var pageNo = 1;
+        var city = "None";
+        var totalCount = 0;
+        var query = '';
+        var orginalData = [];
+        var displayData = [];
+
+        function getData(query,limit,offset){
+
+            fetch("http://127.0.0.1:8000/api/branches?q="+query+"&limit="+limit+"&offset="+offset)
+            .then(response => 
+                {
+                    console.log("def",response);
+                    return response.json();
+                }
+            )
+            .then(json =>{
+                console.log("json",json);
+                data = json.result;
+                orginalData = data;
+                totalCount = Math.ceil(json.totalCount/limit);
+                console.log(totalCount,"fe");
+                document.getElementById('totalCount').value = totalCount;
+                setTable(data)
+                filterbycity();
+            })
+            .catch(error => 
+                console.log('Authorization failed : ' + error.message));
+        }
+
+        function setTable(data){
+                var tableRow = '<tr><th>IFSC</th><th>BANK ID</th><th>Branch</th><th>Address</th><th>City</th><th>district</th><th>State</th><th>Bank Name</th><th>Favourites</th></tr>';
+
+                for(i=0;i<data.length;i++){
+                    //console.log(data[i])
+                    tableRow = tableRow + '<tr>';
+                    var tableData = ''
+                    var keys = Object.keys(data[i]);
+                    for(j=0;j<keys.length;j++){
+                        tableData = tableData + '<td>' + data[i][keys[j]] + '</td>';
+                    }
+                    //Object.keys(data[i]).map(kyeMap(key))
+                   // Object.keys(data[i]).map((key)=>{
+                   //     tableData = tableData + '<td>' + data[i][key] + '</td>';
+                   // })
+                    tableRow = tableRow + tableData + '</tr>'
+                }
+                $('table').html(tableRow)
+        }
+
+        function changeLimt(){
+
+            var x = document.getElementById("limit").value;
+            limit = x;
+            console.log(x,"changes limt")
+            getData(query,limit,offset);
+            
+        }
+        function filterbycity()
+
+        {    console.log(orginalData)
+            var tempData = [];
+            city = document.getElementById("city").value.toUpperCase();
+            console.log("kbkbkbk",city);
+            if (city != "NONE")
+            {
+                for(i = 0;i<orginalData.length;i++)
+                {
+                    if( orginalData[i].city == city)
+                    {
+                        tempData.push(orginalData[i]);
+                    }
+                }
+                setTable(tempData);
+            }
+            else{
+                setTable(orginalData);
+            }
+        }
+
+        function prevFunc(){
+            var x = document.getElementById("jumpTo").value;
+            if( x!=1){
+                x = parseInt(x) - 1;
+                console.log("after",x)
+                var offTemp = x*limit - limit;
+                console.log(x,"changes offset",offTemp,"dw");
+                pageNo = x;
+                offset = offTemp;
+                document.getElementById("jumpTo").value = x;
+                getData(query,limit,offset);
+            }
+
+        }
+
+        function nextFunc(){
+            var x = document.getElementById("jumpTo").value;
+            if( x!=totalCount){
+                x = parseInt(x) + 1;
+                console.log("after",x)
+                var offTemp = x*limit - limit;
+                console.log(x,"changes offset",offTemp,"dw");
+                pageNo = x;
+                offset = offTemp;
+                document.getElementById("jumpTo").value = x;
+
+                getData(query,limit,offset);
+            }
+
+        }
+
+        function changeOffset(){
+            var x = document.getElementById("jumpTo").value; 
+            var offTemp = x*limit - limit;
+            pageNo = 1;
+            offset = offTemp;
+            getData(query,limit,offTemp);
+        }
+
+        function getSearchData(){
+
+            console.log('fe');
+            var keyword = document.getElementById("search").value.toUpperCase();
+            query = keyword;
+            getData(keyword,limit,offset);
+        }
+
+        function filterData(){
+            console.log("fe");
+            //var data = [{name:"shaki",data:"31"},{name:"ats",data:"43"}]
+            var tempData = []
+            console.log("da",orginalData)
+            var x = document.getElementById('search').value;
+            x = x.toUpperCase()
+            for(i=0;i<orginalData.length;i++){
+                keys = Object.keys(orginalData[i]);
+                for(j=0;j<keys.length;j++){
+                    //console.log(data[i],"de",keys,j,i,x)
+                    //console.log("as",data[i][keys[j]],x)
+                    if( keys[j] != "favourites"){
+                    if( orginalData[i][keys[j]].includes(x)){
+                        tempData.push(orginalData[i]);
+                        break;
+                    }}
+                }
+            }
+            setTable(tempData)
+            console.log(tempData)
+
+        }
+
+        $(document).ready(function() {
+            getData(query,limit,offset);
+        });
+    </script>
+
+</html>
