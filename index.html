@@ -94,15 +94,32 @@
 
         function setTable(data){
                 var tableRow = '<tr><th>IFSC</th><th>BANK ID</th><th>Branch</th><th>Address</th><th>City</th><th>district</th><th>State</th><th>Bank Name</th><th>Favourites</th></tr>';
-
+                var temp_data = localStorage.getItem("Fav")
+                temp_data = JSON.parse(temp_data)
                 for(i=0;i<data.length;i++){
                     //console.log(data[i])
                     tableRow = tableRow + '<tr>';
                     var tableData = ''
                     var keys = Object.keys(data[i]);
                     for(j=0;j<keys.length;j++){
+                        if (keys[j] != 'favourites')
                         tableData = tableData + '<td>' + data[i][keys[j]] + '</td>';
+                        else
+
+                        {   if (temp_data != null)
+                            {if (temp_data.includes(data[i].ifsc))
+                            {
+                            data[i].favourites = 'True'
+                            
+                            }
+                            else{
+                        data[i].favourites = 'False'
+                                }}
+                        tableData = tableData + '<td>' + '<input type = "button" data-label="' + data[i].ifsc + '" onClick = "myfunction(this)" value='+data[i].favourites+' name='+data[i].favourites+'>' + '</td>'
+
                     }
+                    }
+                   
                     //Object.keys(data[i]).map(kyeMap(key))
                    // Object.keys(data[i]).map((key)=>{
                    //     tableData = tableData + '<td>' + data[i][key] + '</td>';
@@ -110,6 +127,42 @@
                     tableRow = tableRow + tableData + '</tr>'
                 }
                 $('table').html(tableRow)
+        }
+        function myfunction(bank_ifsc)
+        {   var Label_name = bank_ifsc.getAttribute("data-label");
+            console.log(Label_name)
+            if (bank_ifsc.value != "True")
+            {
+                bank_ifsc.value = "True"
+                var temp_data = localStorage.getItem("Fav")
+                temp_data = JSON.parse(temp_data)
+                console.log(temp_data)
+                if (temp_data != null)
+                {   
+                    console.log(temp_data)
+                    temp_data.push(Label_name)
+                    localStorage.setItem("Fav",JSON.stringify(temp_data))
+                }
+                else{
+                    temp_data = []
+                    temp_data.push(Label_name)
+                    localStorage.setItem("Fav",JSON.stringify(temp_data))
+                }
+                //localStorage.setItem("Fav",JSON.(temp_data));
+
+            }
+            else{
+                bank_ifsc.value = "False"
+                var temp_data = localStorage.getItem("Fav")
+                temp_data = JSON.parse(temp_data)
+                var index = temp_data.indexOf(Label_name);
+                if (index !== -1) {
+                    temp_data.splice(index, 1);
+                                }
+                                localStorage.setItem("Fav",JSON.stringify(temp_data))               
+
+            }
+            console.log(bank_ifsc.value)
         }
 
         function changeLimt(){
