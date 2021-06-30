@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset = "utf-8">
+        <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+         <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.6/es6-shim.min.js" integrity="sha512-Dg4/NsM35WYe4Vpj/ZzxsN7K4ifsi6ecw9+VB5rmCntqoQjEu4dQxL6/qQVebHalidCqWiVkWVK59QtJCCjBDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       
         <style>
             table {
                 font-family: arial, sans-serif;
@@ -22,7 +27,11 @@
         </style>
     </head>
     <body>
-
+        <div class = "ui-widget">
+            <p>Branch</p>
+            <label for = "automplete-2">Name: </label>
+            <input id = "automplete-2" onkeyup="autocomplete_util()" onchange="getbranch()">
+         </div>
         <h2>BANK Table</h2>
         <label for="city">City:</label>
         <select id="city" onchange="filterbycity()">
@@ -60,6 +69,7 @@
 
     </body>
     <script>
+        var availableTutorials  = [];
         var offset = 0;
         var limit = 10;
         var pageNo = 1;
@@ -68,6 +78,54 @@
         var query = '';
         var orginalData = [];
         var displayData = [];
+        function autocomplete_util()
+        {    var x = document.getElementById("automplete-2").value;
+            fetch("http://127.0.0.1:8000/api/branches/autocomplete?q="+x+"&limit="+10+"&offset="+0)
+            .then(response =>{
+            return response.json()})
+            .then(response =>
+            {   var branch_list = []
+                data = response.result;
+                console.log("data",data.length)
+                availableTutorials = []
+                if (data.length != 0)
+                for(var i=0;i<10;i++ ){
+                    console.log("here",data[i].branch);
+                    availableTutorials.push(data[i].branch);
+                }
+                autocompleteFunc();
+            })
+        }
+        function getbranch()
+        {   var x = document.getElementById("automplete-2").value
+            console.log("Branch",x);
+            fetch("http://127.0.0.1:8000/api/branches?q="+x+"&limit="+limit+"&offset="+offset)
+            .then(response => 
+                {
+                    console.log("def",response);
+                    return response.json();
+                }
+            ).then(json =>{
+                console.log("json",json);
+                data = json.result;
+                orginalData = data;
+                totalCount = Math.ceil(json.totalCount/limit);
+                console.log(totalCount,"fe");
+                document.getElementById('totalCount').value = totalCount;
+                setTable(data)
+                filterbycity();
+            })
+            .catch(error => 
+                console.log('Authorization failed : ' + error.message));
+        }
+        
+        function autocompleteFunc() {
+           
+            $( "#automplete-2" ).autocomplete({
+               source: availableTutorials ,
+               autoFocus:true
+            });
+         }
 
         function getData(query,limit,offset){
 
@@ -90,7 +148,12 @@
             })
             .catch(error => 
                 console.log('Authorization failed : ' + error.message));
+            
+            
+            
+                
         }
+        
 
         function setTable(data){
                 var tableRow = '<tr><th>IFSC</th><th>BANK ID</th><th>Branch</th><th>Address</th><th>City</th><th>district</th><th>State</th><th>Bank Name</th><th>Favourites</th></tr>';
