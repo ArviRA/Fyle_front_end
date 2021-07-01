@@ -129,6 +129,12 @@
 
         function getData(query,limit,offset){
 
+            var cache = localStorage.getItem("cache&q="+query+"&limit="+limit+"&offset="+offset)
+            if (cache == null)
+            {
+
+            
+
             fetch("http://127.0.0.1:8000/api/branches?q="+query+"&limit="+limit+"&offset="+offset)
             .then(response => 
                 {
@@ -138,22 +144,32 @@
             )
             .then(json =>{
                 console.log("json",json);
-                data = json.result;
+                
+                localStorage.setItem("cache&q="+query+"&limit="+limit+"&offset="+offset,JSON.stringify(json))
+                getdata_util(json);
+                
+            })
+            .catch(error => 
+                console.log('Authorization failed : ' + error.message));
+        }
+        else{
+            console.log("cache",cache)
+            getdata_util(JSON.parse(cache));
+
+        }
+            
+            
+                
+        }
+        function getdata_util(json)
+        {       data = json.result;
                 orginalData = data;
                 totalCount = Math.ceil(json.totalCount/limit);
                 console.log(totalCount,"fe");
                 document.getElementById('totalCount').value = totalCount;
                 setTable(data)
                 filterbycity();
-            })
-            .catch(error => 
-                console.log('Authorization failed : ' + error.message));
-            
-            
-            
-                
         }
-        
 
         function setTable(data){
                 var tableRow = '<tr><th>IFSC</th><th>BANK ID</th><th>Branch</th><th>Address</th><th>City</th><th>district</th><th>State</th><th>Bank Name</th><th>Favourites</th></tr>';
