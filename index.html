@@ -80,45 +80,62 @@
         var displayData = [];
         function autocomplete_util()
         {    var x = document.getElementById("automplete-2").value;
-            fetch("http://127.0.0.1:8000/api/branches/autocomplete?q="+x+"&limit="+10+"&offset="+0)
+            var cache_auto = localStorage.getItem("cache_auto&q="+x+"&limit="+limit+"&offset="+offset)
+            console.log("inside cache",cache_auto)
+            //localStorage.removeItem("cache_auto&q="+x+"&limit="+limit+"&offset="+offset)
+        if (cache_auto == null)
+        {   console.log("enterd iffff")
+            fetch("http://127.0.0.1:8000/api/branches/autocomplete?q="+x+"&limit="+30+"&offset="+0)
             .then(response =>{
             return response.json()})
             .then(response =>
             {   var branch_list = []
                 data = response.result;
-                console.log("data",data.length)
+                localStorage.setItem("cache_auto&q="+x+"&limit="+limit+"&offset="+offset,JSON.stringify(data))
+                autocomplete_cache(data);
+                
+            })
+        }
+        else{
+            autocomplete_cache(JSON.parse(cache_auto))
+        }
+    }
+        function autocomplete_cache(data)
+        {       
+                console.log("data",data)
                 availableTutorials = []
                 if (data.length != 0)
                 for(var i=0;i<10;i++ ){
+                    if (availableTutorials.includes(data[i].branch) == false){
                     console.log("here",data[i].branch);
                     availableTutorials.push(data[i].branch);
-                }
+                }}
                 autocompleteFunc();
-            })
         }
         function getbranch()
         {   var x = document.getElementById("automplete-2").value
             console.log("Branch",x);
+            var cache = localStorage.getItem("cache&q="+x+"&limit="+limit+"&offset="+offset)
+            if (cache == null)
+            {
             fetch("http://127.0.0.1:8000/api/branches?q="+x+"&limit="+limit+"&offset="+offset)
             .then(response => 
-                {
+                {   
                     console.log("def",response);
                     return response.json();
                 }
             ).then(json =>{
                 console.log("json",json);
-                data = json.result;
-                orginalData = data;
-                totalCount = Math.ceil(json.totalCount/limit);
-                console.log(totalCount,"fe");
-                document.getElementById('totalCount').value = totalCount;
-                setTable(data)
-                filterbycity();
+                localStorage.setItem("cache&q="+x+"&limit="+limit+"&offset="+offset,JSON.stringify(json))
+                getdata_util(json);
+                
             })
             .catch(error => 
                 console.log('Authorization failed : ' + error.message));
+        }else{
+            getdata_util(JSON.parse(cache))
         }
-        
+    }
         function autocompleteFunc() {
            
             $( "#automplete-2" ).autocomplete({
