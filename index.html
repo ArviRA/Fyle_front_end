@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
          <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -9,6 +10,43 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.6/es6-shim.min.js" integrity="sha512-Dg4/NsM35WYe4Vpj/ZzxsN7K4ifsi6ecw9+VB5rmCntqoQjEu4dQxL6/qQVebHalidCqWiVkWVK59QtJCCjBDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
        
         <style>
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+              }
+              
+              /* Modal Content */
+              .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+              }
+              
+              /* The Close Button */
+              .close {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+              }
+              
+              .close:hover,
+              .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+              }
             table {
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
@@ -85,7 +123,7 @@
             //localStorage.removeItem("cache_auto&q="+x+"&limit="+limit+"&offset="+offset)
         if (cache_auto == null)
         {   console.log("enterd iffff")
-            fetch("http://127.0.0.1:8000/api/branches/autocomplete?q="+x+"&limit="+30+"&offset="+0)
+            fetch("https://fylehqapi.herokuapp.com/api/branches/autocomplete?q="+x+"&limit="+30+"&offset="+0)
             .then(response =>{
             return response.json()})
             .then(response =>
@@ -118,7 +156,7 @@
             var cache = localStorage.getItem("cache&q="+x+"&limit="+limit+"&offset="+offset)
             if (cache == null)
             {
-            fetch("http://127.0.0.1:8000/api/branches?q="+x+"&limit="+limit+"&offset="+offset)
+            fetch("https://fylehqapi.herokuapp.com/api/branches?q="+x+"&limit="+limit+"&offset="+offset)
             .then(response => 
                 {   
                     console.log("def",response);
@@ -152,7 +190,7 @@
 
             
 
-            fetch("http://127.0.0.1:8000/api/branches?q="+query+"&limit="+limit+"&offset="+offset)
+            fetch("https://fylehqapi.herokuapp.com/api/branches?q="+query+"&limit="+limit+"&offset="+offset)
             .then(response => 
                 {
                     console.log("def",response);
