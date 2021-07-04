@@ -17,7 +17,24 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.6/es6-shim.min.js" integrity="sha512-Dg4/NsM35WYe4Vpj/ZzxsN7K4ifsi6ecw9+VB5rmCntqoQjEu4dQxL6/qQVebHalidCqWiVkWVK59QtJCCjBDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
        
         <style>
-      
+
+          input:focus, textarea:focus, select:focus{
+            outline: none;
+            }
+            body{
+    overflow-y: scroll;
+
+            }
+            .example::-webkit-scrollbar {
+              display: none;
+
+            }
+            
+            /* Hide scrollbar for IE, Edge and Firefox */
+            .example {
+              -ms-overflow-style: none;  /* IE and Edge */
+              scrollbar-width: none;  /* Firefox */
+            }
 
             .modal {
                 display: none; /* Hidden by default */
@@ -71,7 +88,7 @@
               tr:nth-child(even) {background-color: #aaaaaa;}
         </style>
     </head>
-    <body style="background-color:#e7e7e7; font-family: 'Encode Sans SC', sans-serif;">
+    <body id="example" style="background-color:#e7e7e7; overflow-y: scroll; font-family: 'Encode Sans SC', sans-serif; ">
 
 
         <div id="myModal" class="modal">
