@@ -120,7 +120,7 @@
         }
 
         function setTable(data){
-                var tableRow = '<tr><th>IFSC</th><th>BANK ID</th><th>Branch</th><th>Address</th><th>City</th><th>district</th><th>State</th><th>Bank Name</th><th>Favourites</th></tr>';
+                var tableRow = '<tr><th>IFSC</th><th>BANK ID</th><th>Branch</th><th>Address</th><th>City</th><th>District</th><th>State</th><th>Bank Name</th><th>Favourites</th></tr>';
                 var temp_data = localStorage.getItem("Fav")
                 temp_data = JSON.parse(temp_data)
                 for(i=0;i<data.length;i++){
@@ -148,7 +148,7 @@
                             else{
                         data[i].favourites = 'False'
                                 }}
-                        tableData = tableData + '<td>' + '<input type = "button" data-label="' + data[i].ifsc + '" onClick = "myfunction(this)" value='+data[i].favourites+' name='+data[i].favourites+'>' + '</td>'
+                        tableData = tableData + '<td>' + '<input type = "button" style="border-radius: 5px; border:0; background-color:white;" data-label="' + data[i].ifsc + '" onClick = "myfunction(this)" value='+data[i].favourites+' name='+data[i].favourites+'>' + '</td>'
 
                     }
                     }

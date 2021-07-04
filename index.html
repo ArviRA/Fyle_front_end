@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@400;800&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC&display=swap" rel="stylesheet">
         <meta charset = "utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
@@ -50,25 +56,24 @@
                 text-decoration: none;
                 cursor: pointer;
               }
-            table {
-                font-family: arial, sans-serif;
+              table {
                 border-collapse: collapse;
                 width: 100%;
-            }
+                font-family: 'Encode Sans SC', sans-serif;
 
-            td, th {
-                border: 1px solid #dddddd;
+              }
+              
+              th, td {
                 text-align: left;
                 padding: 8px;
-            }
-
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
+              }
+              
+              tr:nth-child(even) {background-color: #aaaaaa;}
         </style>
     </head>
-    <body>
-        
+    <body style="background-color:#e7e7e7; font-family: 'Encode Sans SC', sans-serif;">
+
+
         <div id="myModal" class="modal">
 
             <!-- Modal content -->
@@ -78,14 +83,18 @@
             </div>
           
           </div>
+        <span style="text-align: center;"><h2 >Bank Table</h2></span>
         <div class = "ui-widget">
-            <p>Branch</p>
-            <label for = "automplete-2">Name: </label>
-            <input id = "automplete-2" onkeyup="autocomplete_util()" onchange="getbranch()">
+            
+            <label for = "automplete-2">Branch Name:</label>
+            <input id = "automplete-2" style="border-radius: 5px; border:0; background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;" onkeyup="autocomplete_util()" onchange="getbranch()">
          </div>
-        <h2>BANK Table</h2>
+         <br>
+        
         <label for="city">City:</label>
-        <select id="city" onchange="filterbycity()">
+        <select style="border-radius: 5px; border:0;" id="city" onchange="filterbycity()">
             <option value="None" selected>None</option>
             <option value="bangalore" >bangalore</option>
             <option value="chennai">chennai</option>
@@ -93,27 +102,36 @@
             <option value="delhi">delhi</option>
             <option value="thane">thane</option>
         </select>
-        <input type="text" style="" value="Type here" id='search' onkeyUp="filterData()" onchange="getSearchData()" size="40">
+        <label for="search">Search:</label>
+        <input type="text" style="border-radius: 5px; border:0;background-color: white;
+        color: black;
+        border: 2px solid #4CAF50;" value="" id='search' onkeyUp="filterData()" onchange="getSearchData()" size="40">
+        <br>
+
         
-        <table id="bankTable">
-            <div id="table">
+        <table id="bankTable" style="margin-top:15px; border-radius: 5px; border:0;">
+            <div id="table" >
             </div>
         </table>
 
         <label for="limt">No Of Items:</label>
-        <select id="limit" onchange="changeLimt()">
+        <select style="border-radius: 5px; border:0;" id="limit" onchange="changeLimt()">
             <option value="10" selected>10</option>
             <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
         </select>
         <div style="float:right;">
-            <input type="button" id="prev" name="prev" value="Prev" onclick="prevFunc()">
+            <input style="border-radius: 5px; border:0; padding: 5px; width: 60px; background-color: white;
+            color: black;
+            border: 2px solid #FF784F;" type="button" id="prev" name="prev" value="Prev" onclick="prevFunc()">
             <label for="lname">JumpTo:</label>
-            <input type="text" id="jumpTo" name="jumpTo" value='1' size='1px' onchange="changeOffset()">
+            <input style="border-radius: 5px; border:0;" type="text" id="jumpTo" name="jumpTo" value='1' size='1px' onchange="changeOffset()">
             /
-            <input type="text" style="outline: none;border:0" id='totalCount' readonly size="1">
-            <input type="button" id="next" name="next" value="Next" onclick="nextFunc()">
+            <input type="text"  style="outline: none;border:0; border-radius: 5px;" id='totalCount' readonly size="1">
+            <input type="button" style="border-radius: 5px; border:0; padding: 5px; width: 60px; background-color: white;
+            color: black;
+            border: 2px solid #FF784F;" id="next" name="next" value="Next" onclick="nextFunc()">
             <br><br>
         </div>
         
