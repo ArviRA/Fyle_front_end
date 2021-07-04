@@ -14,6 +14,7 @@
             console.log("inside cache",cache_auto)
             //localStorage.removeItem("cache_auto&q="+x+"&limit="+limit+"&offset="+offset)
         if (cache_auto == null)
+        
         {   console.log("enterd iffff")
             fetch("https://fylehqapi.herokuapp.com/api/branches/autocomplete?q="+x+"&limit="+30+"&offset="+0)
             .then(response =>{
