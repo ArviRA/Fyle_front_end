@@ -1,197 +1,174 @@
 <!DOCTYPE html>
 <html>
-    <head>
+   <head>
       <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@400;800&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@400;800&display=swap" rel="stylesheet">
       <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC&display=swap" rel="stylesheet">
-        <meta charset = "utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC&display=swap" rel="stylesheet">
+      <meta charset = "utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
-         <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-         
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
       <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.6/es6-shim.min.js" integrity="sha512-Dg4/NsM35WYe4Vpj/ZzxsN7K4ifsi6ecw9+VB5rmCntqoQjEu4dQxL6/qQVebHalidCqWiVkWVK59QtJCCjBDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-       
-        <style>
-
-          input:focus, textarea:focus, select:focus{
-            outline: none;
-            }
-            body{
-    overflow-y: scroll;
-
-            }
-            .example::-webkit-scrollbar {
-              display: none;
-
-            }
-            
-            /* Hide scrollbar for IE, Edge and Firefox */
-            .example {
-              -ms-overflow-style: none;  /* IE and Edge */
-              scrollbar-width: none;  /* Firefox */
-            }
-
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                padding-top: 100px; /* Location of the box */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-              }
-              
-              /* Modal Content */
-              .modal-content {
-                background-color: #fefefe;
-                margin: auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
-              }
-              
-              /* The Close Button */
-              .close {
-                color: #aaaaaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-              }
-              
-              .close:hover,
-              .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-              }
-              table {
-                border-collapse: collapse;
-                width: 100%;
-                font-family: 'Encode Sans SC', sans-serif;
-
-              }
-              
-              th, td {
-                text-align: left;
-                padding: 8px;
-              }
-              
-              tr:nth-child(even) {background-color: #aaaaaa;}
-        </style>
-    </head>
-    <body id="example" style="background-color:#e7e7e7; overflow-y: scroll; font-family: 'Encode Sans SC', sans-serif; ">
-
-
-        <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content" id="something">
-              <span class="close">&times;</span>
-              <p>Some text in the Modal..</p>
-            </div>
-          
-          </div>
-        <span style="text-align: center;"><h2 >Bank Table</h2></span>
-        <div class = "ui-widget">
-            
-            <label for = "automplete-2">Branch Name:</label>
-            <input id = "automplete-2" style="border-radius: 5px; border:0; background-color: white;
-  color: black;
-  border: 2px solid #4CAF50;" onkeyup="autocomplete_util()" onchange="getbranch()">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.6/es6-shim.min.js" integrity="sha512-Dg4/NsM35WYe4Vpj/ZzxsN7K4ifsi6ecw9+VB5rmCntqoQjEu4dQxL6/qQVebHalidCqWiVkWVK59QtJCCjBDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <style>
+         input:focus, textarea:focus, select:focus{
+         outline: none;
+         }
+         body{
+         overflow-y: scroll;
+         }
+         .example::-webkit-scrollbar {
+         display: none;
+         }
+         /* Hide scrollbar for IE, Edge and Firefox */
+         .example {
+         -ms-overflow-style: none;  /* IE and Edge */
+         scrollbar-width: none;  /* Firefox */
+         }
+         .modal {
+         display: none; /* Hidden by default */
+         position: fixed; /* Stay in place */
+         z-index: 1; /* Sit on top */
+         padding-top: 100px; /* Location of the box */
+         left: 0;
+         top: 0;
+         width: 100%; /* Full width */
+         height: 100%; /* Full height */
+         overflow: auto; /* Enable scroll if needed */
+         background-color: rgb(0,0,0); /* Fallback color */
+         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+         }
+         /* Modal Content */
+         .modal-content {
+         background-color: #fefefe;
+         margin: auto;
+         padding: 20px;
+         border: 1px solid #888;
+         width: 80%;
+         }
+         /* The Close Button */
+         .close {
+         color: #aaaaaa;
+         float: right;
+         font-size: 28px;
+         font-weight: bold;
+         }
+         .close:hover,
+         .close:focus {
+         color: #000;
+         text-decoration: none;
+         cursor: pointer;
+         }
+         table {
+         border-collapse: collapse;
+         width: 100%;
+         font-family: 'Encode Sans SC', sans-serif;
+         }
+         th, td {
+         text-align: left;
+         padding: 8px;
+         }
+         tr:nth-child(even) {background-color: #aaaaaa;}
+      </style>
+   </head>
+   <body id="example" style="background-color:#e7e7e7; overflow-y: scroll; font-family: 'Encode Sans SC', sans-serif; ">
+      <div id="myModal" class="modal">
+         <!-- Modal content -->
+         <div class="modal-content" id="something">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
          </div>
-         <br>
-        
-        <label for="city">City:</label>
-        <select style="border-radius: 5px; border:0;" id="city" onchange="filterbycity()">
-            <option value="None" selected>None</option>
-            <option value="bangalore" >bangalore</option>
-            <option value="chennai">chennai</option>
-            <option value="mumbai">mumbai</option>
-            <option value="delhi">delhi</option>
-            <option value="thane">thane</option>
-        </select>
-        <label for="search">Search:</label>
-        <input type="text" style="border-radius: 5px; border:0;background-color: white;
-        color: black;
-        border: 2px solid #4CAF50;" value="" id='search' onkeyUp="filterData()" onchange="getSearchData()" size="40">
-        <br>
-
-        
-        <table id="bankTable" style="margin-top:15px; border-radius: 5px; border:0;">
-            <div id="table" >
-            </div>
-        </table>
-
-        <label for="limt">No Of Items:</label>
-        <select style="border-radius: 5px; border:0;" id="limit" onchange="changeLimt()">
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-        <div style="float:right;">
-            <input style="border-radius: 5px; border:0; padding: 5px; width: 60px; background-color: white;
+      </div>
+      <span style="text-align: center;">
+         <h2 >Bank Table</h2>
+      </span>
+      <div class = "ui-widget">
+         <label for = "automplete-2">Branch Name:</label>
+         <input id = "automplete-2" style="border-radius: 5px; border:0; background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;" onkeyup="autocomplete_util()" onchange="getbranch()">
+      </div>
+      <br>
+      <label for="city">City:</label>
+      <select style="border-radius: 5px; border:0;" id="city" onchange="filterbycity()">
+         <option value="None" selected>None</option>
+         <option value="bangalore" >bangalore</option>
+         <option value="chennai">chennai</option>
+         <option value="mumbai">mumbai</option>
+         <option value="delhi">delhi</option>
+         <option value="thane">thane</option>
+      </select>
+      <label for="search">Search:</label>
+      <input type="text" style="border-radius: 5px; border:0;background-color: white;
+         color: black;
+         border: 2px solid #4CAF50;" value="" id='search' onkeyUp="filterData()" onchange="getSearchData()" size="40">
+      <br>
+      <table id="bankTable" style="margin-top:15px; border-radius: 5px; border:0;">
+         <div id="table" >
+         </div>
+      </table>
+      <label for="limt">No Of Items:</label>
+      <select style="border-radius: 5px; border:0;" id="limit" onchange="changeLimt()">
+         <option value="10" selected>10</option>
+         <option value="20">20</option>
+         <option value="50">50</option>
+         <option value="100">100</option>
+      </select>
+      <div style="float:right;">
+         <input style="border-radius: 5px; border:0; padding: 5px; width: 60px; background-color: white;
             color: black;
             border: 2px solid #FF784F;" type="button" id="prev" name="prev" value="Prev" onclick="prevFunc()">
-            <label for="lname">JumpTo:</label>
-            <input style="border-radius: 5px; border:0;" type="text" id="jumpTo" name="jumpTo" value='1' size='1px' onchange="changeOffset()">
-            /
-            <input type="text"  style="outline: none;border:0; border-radius: 5px;" id='totalCount' readonly size="1">
-            <input type="button" style="border-radius: 5px; border:0; padding: 5px; width: 60px; background-color: white;
+         <label for="lname">JumpTo:</label>
+         <input style="border-radius: 5px; border:0;" type="text" id="jumpTo" name="jumpTo" value='1' size='1px' onchange="changeOffset()">
+         /
+         <input type="text"  style="outline: none;border:0; border-radius: 5px;" id='totalCount' readonly size="1">
+         <input type="button" style="border-radius: 5px; border:0; padding: 5px; width: 60px; background-color: white;
             color: black;
             border: 2px solid #FF784F;" id="next" name="next" value="Next" onclick="nextFunc()">
-            <br><br>
-        </div>
-        
-
-    </body>
-    <script src = "script.js"></script>
-    <script>
-        var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal  
-function popUp(pop_data) {
-    var temp;
-  modal.style.display = "block";
-  console.log("inside popup",pop_data.getAttribute("data-label"))
-  var ifsc = pop_data.getAttribute("data-label");
-  for(i=0;i<orginalData.length;i++)
-  { temp = "";
+         <br><br>
+      </div>
+   </body>
+   <script src = "script.js"></script>
+   <script>
+      var modal = document.getElementById("myModal");
+      
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+      
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+      
+      // When the user clicks the button, open the modal  
+      function popUp(pop_data) {
+      var temp;
+      modal.style.display = "block";
+      console.log("inside popup",pop_data.getAttribute("data-label"))
+      var ifsc = pop_data.getAttribute("data-label");
+      for(i=0;i<orginalData.length;i++)
+      { temp = "";
       if (orginalData[i].ifsc == ifsc)
       {
-            temp = orginalData[i];
-            break;
+          temp = orginalData[i];
+          break;
       }
-  }
-  document.getElementById("something").innerHTML = "<p>"+JSON.stringify(temp)+"</p>"
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-    </script>
-
+      }
+      document.getElementById("something").innerHTML = "<p>"+JSON.stringify(temp)+"</p>"
+      }
+      
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+      modal.style.display = "none";
+      }
+      
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+      if (event.target == modal) {
+      modal.style.display = "none";
+      }
+      }
+   </script>
 </html>
